@@ -34,6 +34,8 @@ def check_path_access(path: str) -> (bool, list[str], list[str]|None):
     else:
         can_access = can_i_see(stat_res, effective_user, effective_group)
 
+    print(stat_res, effective_user, effective_group, can_access)
+    print(repr(stat_res))
     res.append(repr(stat_res))
 
     if can_access and stat.S_ISDIR(stat_res.st_mode):
@@ -56,13 +58,15 @@ def find_access_breaking_point(path: str) -> (str, os.stat_result):
                 continue
 
 def can_i_see(stat_res: os.stat_result, euid: int, egid: int):
-    if (stat_res.st_uid == euid and stat_res.st_mode & stat.S_IRUSR
-        or
-        stat_res.st_gid == egid and stat_res.st_mode & stat.S_IRGRP
-        or
-        stat_res.st_mode & stat.S_IROTH and not stat.S_ISDIR(stat_res.st_mode)
-        or
-        stat_res.st_mode & (stat.S_IROTH | stat.S_IXOTH)):
+    if stat_res.st_uid == euid and stat_res.st_mode & stat.S_IRUSR:
+        return True
+    if stat_res.st_gid == egid and stat_res.st_mode & stat.S_IRGRP:
+        return True
+    if stat_res.st_mode & stat.S_IROTH and not stat.S_ISDIR(stat_res.st_mode):
+        return True
+    if (stat.S_ISDIR(stat_res.st_mode)
+         and stat_res.st_mode & stat.S_IROTH
+         and stat_res.st_mode & stat.S_IXOTH):
         return True
     return False
     

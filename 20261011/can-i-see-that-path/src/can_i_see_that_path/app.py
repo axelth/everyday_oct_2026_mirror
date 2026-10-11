@@ -89,14 +89,14 @@ class RequestHandler(BaseHTTPRequestHandler):
         return [f'<p>{part}</p>' for part in message_parts]
 
     def pre_wrap(self, pre_text: str) -> str:
-        return f'<pre>{str}</pre>'
+        return f'<pre>{pre_text}</pre>'
     
     def close_html(self) -> str:
         return "</body>\n</html>"
 
     def banner(self, yes: bool) -> str:
-        banner_class = "yes" if yes else "no"
-        return f'<div class="{banner_class}"><p>YES</p></div>'
+        banner_class, banner_text = ("yes", "YES") if yes else ("no", "NO")
+        return f'<div class="{banner_class}"><p>{banner_text}</p></div>'
 
     def ul_wrap(self, items: list[str]) -> str:
         li_items_str = '\n'.join([f'\t<li>{item}</li>' for item in items])
