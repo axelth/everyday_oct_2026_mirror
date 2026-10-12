@@ -72,7 +72,8 @@ It would be fun to do the following two expansions.
 1. graph the load averages.
 2. make the time axis logarithmic so we have high resolution for the last few minutes, and then increasingly sparse.
 
-### Background Task?
+### Background Task
+Use `threading.Thread` to run a background thread to gets the load average and writes to the DB
 
 ### Configuration
 We need to know where the SQLite database file is. We will pass this in as a commandline option.
