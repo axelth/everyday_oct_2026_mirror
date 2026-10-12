@@ -4,7 +4,7 @@ Let's stat some filesystems.
 That is, let's put the results of `os.statvfs` on a web page
 
 ## Plan
-Call `os.statvfs('/')`
+Present a text input field and call `os.statvfs` on the input.
 ```sh
 $ pydoc3 os.statvfs
 Help on built-in function statvfs in os:
@@ -33,6 +33,6 @@ os.statvfs_result = class statvfs_result(builtins.tuple)
 ... snip ...
 ```
 
-Display `bsize`, `blocks`, `bfree`, `bavail`. The three latter values are displayed multiplied by `bsize`
+Display `bsize`, `blocks`, `bfree`, `bavail`. The three latter values are also displayed multiplied by `bsize`
 
 
