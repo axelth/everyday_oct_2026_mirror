@@ -1,2 +1,4 @@
+import load_that_average.app
+
 def main() -> None:
-    print("Hello from load-that-average!")
+    app.main()
